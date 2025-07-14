@@ -1,5 +1,7 @@
 // lib/main_hr/app_providers.dart
 
+import 'package:flex_ops_hr/features/profile/presentation/controller/profile_provider.dart';
+import 'package:flex_ops_hr/features/profile/presentation/pages/profile_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/login_provider.dart';
@@ -17,6 +19,7 @@ class AppProviders extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => sl<LoginProvider>()),
         ChangeNotifierProvider(create: (_) => sl<ChangePasswordProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<ProfileProvider>()),
       ],
       child: child,
     );
