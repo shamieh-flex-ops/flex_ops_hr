@@ -67,7 +67,7 @@ class BottomNavBarWithFab extends StatelessWidget {
                 ),
               ),
             ),
-            const Expanded(child: SizedBox()), // للمساحة المخصصة لـ FAB
+            const Expanded(child: SizedBox()),
             Expanded(
               child: InkWell(
                 onTap: () => _onItemTapped(1, context),

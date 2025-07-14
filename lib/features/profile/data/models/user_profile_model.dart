@@ -14,14 +14,14 @@ class UserProfileModel extends UserProfile {
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
-      name: json['name'] ?? '',
-      email: json['email'] ?? '',
-      phone: json['phone'] ?? '',
-      address: json['address'] ?? '',
-      position: json['position'] ?? '',
-      startDate: json['start_date'] ?? '',
-      salary: json['salary'] ?? '',
-      imageUrl: json['image'] ?? '',
+      name: json['employee_name'] ?? '',
+      email: json['employee_work_email'] ?? '',
+      phone: json['employee_work_phone'] ?? '',
+      address: json['employee_department']?['name'] ?? '',
+      position: json['employee_job']?['name'] ?? '',
+      startDate: json['contract_start_date'] ?? '',
+      salary: json['basic_salary']?.toString() ?? '',
+      imageUrl: json['image_url'] ?? '',
     );
-  }
-}
+  }}
+

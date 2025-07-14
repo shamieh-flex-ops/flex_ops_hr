@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/network/api_constance.dart';
 import '../controller/profile_provider.dart';
 import '../widgets/bottom_nav_bar.dart';
 
@@ -64,12 +65,14 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                                       width: 80.w,
                                       height: 80.h,
                                       child: Image.network(
-                                        profile.imageUrl,
+                                      "${ApiConstance.domain}${profile.imageUrl}",
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
                                 ),
+
+
                                 SizedBox(width: 15.w),
                                 Text(
                                   'Personal Information',
@@ -80,6 +83,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                             ),
                             SizedBox(height: 10.h),
                             const Divider(),
+                            Text("${ApiConstance.domain}${profile.imageUrl}"),
                             _buildTile(
                                 title: 'Name',
                                 value: profile.name,

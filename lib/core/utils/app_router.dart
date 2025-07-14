@@ -3,6 +3,8 @@ import 'package:flex_ops_hr/features/home/presentation/screens/home_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/profile/presentation/pages/profile_details_page.dart';
+
 GoRouter appRouter(bool shouldLogin) {
   return GoRouter(
     initialLocation: shouldLogin ? '/home' : '/login',
@@ -14,6 +16,10 @@ GoRouter appRouter(bool shouldLogin) {
       GoRoute(
         path: '/home',
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const ProfileDetailsPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
