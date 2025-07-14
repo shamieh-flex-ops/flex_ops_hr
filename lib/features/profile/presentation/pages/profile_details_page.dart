@@ -21,7 +21,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     Future.microtask(() => Provider.of<ProfileProvider>(context, listen: false)
         .fetchUserProfile());
   }
-
+//test
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProfileProvider>(context);
