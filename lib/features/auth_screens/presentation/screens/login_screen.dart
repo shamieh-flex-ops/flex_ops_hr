@@ -5,6 +5,7 @@ import 'package:flex_ops_hr/features/auth_screens/presentation/controller/login_
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 
@@ -43,9 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (loginProvider.loginResult != null) {
         print(loginProvider.loginResult);
-        ScaffoldMessenger.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('تم تسجيل الدخول بنجاح')),
         );
+
+context.go('/home');  
+
+    
         // context.go('/home');
       } else if (loginProvider.errorMessage != null) {
         ScaffoldMessenger.of(context).showSnackBar(

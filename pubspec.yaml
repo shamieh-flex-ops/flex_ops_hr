@@ -48,6 +48,7 @@ dependencies:
   flutter_screenutil:
   flutter_svg: 
   go_router:
+  google_maps_flutter:
 
 
 
