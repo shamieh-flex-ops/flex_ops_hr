@@ -1,5 +1,6 @@
 import 'package:flex_ops_hr/features/auth_screens/presentation/screens/login_screen.dart';
 import 'package:flex_ops_hr/features/home/presentation/screens/home_screen.dart';
+import 'package:flex_ops_hr/features/payslips/presentation/screens/payslips_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +17,12 @@ GoRouter appRouter(bool shouldLogin) {
       GoRoute(
         path: '/home',
         builder: (context, state) => const HomeScreen(),
+          routes: [
+   GoRoute(
+          path: 'payslips',
+          builder: (context, state) => const PayslipsPage(),
+        ),
+  ],
       ),
       GoRoute(
         path: '/profile',

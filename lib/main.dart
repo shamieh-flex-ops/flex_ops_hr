@@ -32,7 +32,7 @@ class FlexOpsApp extends StatelessWidget {
             title: 'Flex Ops HR',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(primarySwatch: Colors.indigo),
-            routerConfig: appRouter(shouldLogin), // ✅ important change
+            routerConfig: appRouter(shouldLogin),
           );
         },
       ),

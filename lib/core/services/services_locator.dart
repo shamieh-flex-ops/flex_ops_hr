@@ -1,4 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flex_ops_hr/features/payslips/data/datasources/payslip_remote_data_source.dart';
+import 'package:flex_ops_hr/features/payslips/data/repositories/payslip_repository_impl.dart';
+import 'package:flex_ops_hr/features/payslips/domain/repositories/base_payslip_repository.dart';
+import 'package:flex_ops_hr/features/payslips/domain/usecases/get_payslips_usecase.dart';
+import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 import 'package:flex_ops_hr/features/profile/data/datasource/profile_remote_data_source.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flex_ops_hr/features/auth_screens/data/datasource/auth_remote_data_source.dart';
@@ -54,5 +59,23 @@ class ServicesLocator {
 
     // Profile - Provider
     sl.registerFactory(() => ProfileProvider(getUserProfileUseCase: sl()));
+
+
+    // Payslips - Data Source
+sl.registerLazySingleton<PayslipRemoteDataSource>(
+  () => PayslipRemoteDataSourceImpl(dio: sl()),
+);
+
+// Payslips - Repository
+sl.registerLazySingleton<BasePayslipRepository>(
+  () => PayslipRepositoryImpl(remoteDataSource: sl()),
+);
+
+// Payslips - Use Case
+sl.registerLazySingleton(() => GetPayslipsUseCase(sl()));
+
+// Payslips - Provider
+sl.registerFactory(() => PayslipProvider(getPayslipsUseCase: sl()));
+
   }
 }

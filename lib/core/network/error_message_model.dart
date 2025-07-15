@@ -18,7 +18,8 @@ factory MessageModel.fromJson(Map<String, dynamic> json) {
     statusCode: json["status_code"] ?? 0,
     statusMessage: result is Map<String, dynamic> && result["error"] != null
         ? result["error"]
-        : json["status_message"] ?? 'Unexpected error',    success: json["success"] ?? false,
+        : json["status_message"] ?? 'Unexpected error', 
+           success: json["success"] ?? false,
   );
 }
 

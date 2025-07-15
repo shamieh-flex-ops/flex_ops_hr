@@ -15,7 +15,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final result = await remoteDataSource.getUserProfile();
       return Right(result);
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(e.toString(),500 ));
     }
   }
 }

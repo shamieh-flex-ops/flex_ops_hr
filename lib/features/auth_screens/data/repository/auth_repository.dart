@@ -19,7 +19,7 @@ class AuthRepository extends BaseAuthRepository {
       final result = await remoteDataSource.login(params);
       return Right(result);
     } on ServerException catch (failure) {
-      return Left(ServerFailure(failure.messageModel.statusMessage));
+      return Left(ServerFailure(failure.messageModel.statusMessage, failure.messageModel.statusCode));
     }
   }
 
@@ -29,7 +29,7 @@ class AuthRepository extends BaseAuthRepository {
       final result = await remoteDataSource.changePassword(params);
       return Right(result);
     } on ServerException catch (failure) {
-      return Left(ServerFailure(failure.messageModel.statusMessage));
+      return Left(ServerFailure(failure.messageModel.statusMessage, failure.messageModel.statusCode));
     }
   }
 }

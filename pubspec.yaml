@@ -49,6 +49,7 @@ dependencies:
   flutter_svg: 
   go_router:
   google_maps_flutter:
+  url_launcher:
 
 
 

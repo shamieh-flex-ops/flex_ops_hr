@@ -1,8 +1,11 @@
 // lib/presentation/widgets/main_cards_grid.dart
 
 import 'package:flex_ops_hr/features/home/presentation/widgets/main_card.dart';
+import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class MainCardsGrid extends StatelessWidget {
   final int crossAxisCount;
@@ -30,8 +33,22 @@ class MainCardsGrid extends StatelessWidget {
           icon: item.icon,
           iconColor: item.iconColor,
           iconBackgroundColor: item.backgroundColor,
-          onTap: () {
-            // TODO: Handle tap navigation or action
+          onTap: () async {
+            switch (item.title) {
+              case 'Payslips':
+                   context.push('/home/payslips');
+                final provider =
+                    Provider.of<PayslipProvider>(context, listen: false);
+                await provider.fetchPayslips();
+           
+                break;
+
+              default:
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Coming Soon...")),
+                );
+                break;
+            }
           },
         );
       },
@@ -54,52 +71,52 @@ class CardDataModel {
 }
 
 List<CardDataModel> _staticCardData() => [
-  CardDataModel(
-    title: 'Attendance',
-    icon: Icons.access_time,
-    iconColor: Colors.orange,
-    backgroundColor: Colors.orange.shade100,
-  ),
-  CardDataModel(
-    title: 'Leaves',
-    icon: Icons.beach_access,
-    iconColor: Colors.teal,
-    backgroundColor: Colors.teal.shade100,
-  ),
-  CardDataModel(
-    title: 'Payslips',
-    icon: Icons.receipt_long,
-    iconColor: Colors.blue,
-    backgroundColor: Colors.blue.shade100,
-  ),
-  CardDataModel(
-    title: 'Requests',
-    icon: Icons.request_page,
-    iconColor: Colors.purple,
-    backgroundColor: Colors.purple.shade100,
-  ),
-  CardDataModel(
-    title: 'Overtime',
-    icon: Icons.timelapse,
-    iconColor: Colors.indigo,
-    backgroundColor: Colors.indigo.shade100,
-  ),
-  CardDataModel(
-    title: 'Documents',
-    icon: Icons.folder,
-    iconColor: Colors.green,
-    backgroundColor: Colors.green.shade100,
-  ),
-  CardDataModel(
-    title: 'Employees',
-    icon: Icons.group,
-    iconColor: Colors.red,
-    backgroundColor: Colors.red.shade100,
-  ),
-  CardDataModel(
-    title: 'Settings',
-    icon: Icons.settings,
-    iconColor: Colors.grey,
-    backgroundColor: Colors.grey.shade300,
-  ),
-];
+      CardDataModel(
+        title: 'Attendance',
+        icon: Icons.access_time,
+        iconColor: Colors.orange,
+        backgroundColor: Colors.orange.shade100,
+      ),
+      CardDataModel(
+        title: 'Leaves',
+        icon: Icons.beach_access,
+        iconColor: Colors.teal,
+        backgroundColor: Colors.teal.shade100,
+      ),
+      CardDataModel(
+        title: 'Payslips',
+        icon: Icons.receipt_long,
+        iconColor: Colors.blue,
+        backgroundColor: Colors.blue.shade100,
+      ),
+      CardDataModel(
+        title: 'Requests',
+        icon: Icons.request_page,
+        iconColor: Colors.purple,
+        backgroundColor: Colors.purple.shade100,
+      ),
+      CardDataModel(
+        title: 'Overtime',
+        icon: Icons.timelapse,
+        iconColor: Colors.indigo,
+        backgroundColor: Colors.indigo.shade100,
+      ),
+      CardDataModel(
+        title: 'Documents',
+        icon: Icons.folder,
+        iconColor: Colors.green,
+        backgroundColor: Colors.green.shade100,
+      ),
+      CardDataModel(
+        title: 'Employees',
+        icon: Icons.group,
+        iconColor: Colors.red,
+        backgroundColor: Colors.red.shade100,
+      ),
+      CardDataModel(
+        title: 'Settings',
+        icon: Icons.settings,
+        iconColor: Colors.grey,
+        backgroundColor: Colors.grey.shade300,
+      ),
+    ];

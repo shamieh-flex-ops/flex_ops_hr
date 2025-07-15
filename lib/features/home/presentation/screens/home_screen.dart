@@ -1,6 +1,5 @@
 import 'package:flex_ops_hr/core/utils/app_theme.dart';
 import 'package:flex_ops_hr/features/home/presentation/widgets/bottom_nav_bar_with_fab.dart';
-import 'package:flex_ops_hr/features/home/presentation/widgets/company_location_map.dart';
 import 'package:flex_ops_hr/features/home/presentation/widgets/leave_options_bottom_sheet.dart';
 import 'package:flex_ops_hr/features/home/presentation/widgets/main_cards_grid.dart';
 import 'package:flex_ops_hr/features/home/presentation/widgets/user_profile_section.dart';
@@ -23,10 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   String userProfilePicUrl =
       "https://cdn.pixabay.com/photo/2013/05/24/18/06/person-113427_1280.jpg";
 
-  final LatLng _companyFixedLocation = const LatLng(31.9539, 35.9106);
+  final LatLng companyFixedLocation = const LatLng(31.9539, 35.9106);
   LatLng? currentDeviceLocation;
 
-  void _updateCurrentDeviceLocation(LatLng? location) {
+  void updateCurrentDeviceLocation(LatLng? location) {
     setState(() {
       currentDeviceLocation = location;
     });
