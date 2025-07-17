@@ -7,6 +7,9 @@ import 'package:flex_ops_hr/features/resignation/presentation/screens/resignatio
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/leaves/domain/entities/leave_status_group.dart';
+import '../../features/leaves/presentation/screens/leaves_status_details_page.dart';
+import '../../features/leaves/presentation/screens/leaves_status_page.dart';
 import '../../features/profile/presentation/pages/profile_details_page.dart';
 
 GoRouter appRouter(bool shouldLogin) {
@@ -24,6 +27,19 @@ GoRouter appRouter(bool shouldLogin) {
           GoRoute(
             path: 'payslips',
             builder: (context, state) => const PayslipsPage(),
+          ),
+          GoRoute(
+            path: 'leaves',
+            builder: (context, state) => const LeavesStatusPage(),
+            routes: [
+              GoRoute(
+                path: 'status_details',
+                builder: (context, state) {
+                  final group = state.extra as LeaveStatusGroup;
+                  return LeaveStatusDetailsPage(group: group);
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/loans',

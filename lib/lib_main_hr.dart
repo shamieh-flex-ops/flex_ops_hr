@@ -10,6 +10,8 @@ import 'package:flex_ops_hr/features/auth_screens/presentation/controller/login_
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/change_password_provider.dart';
 import 'package:flex_ops_hr/core/services/services_locator.dart';
 
+import 'features/leaves/presentation/controller/leave_status_provider.dart';
+
 class AppProviders extends StatelessWidget {
   final Widget child;
 
@@ -25,6 +27,8 @@ class AppProviders extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<PayslipProvider>()),
         ChangeNotifierProvider(create: (_) => sl<LoanProvider>()),
         ChangeNotifierProvider(create: (_) => sl<ResignationProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<LeaveStatusProvider>()),
+
 
 
       ],

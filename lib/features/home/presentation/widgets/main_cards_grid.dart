@@ -9,6 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../leaves/presentation/controller/leave_status_provider.dart';
+
 class MainCardsGrid extends StatelessWidget {
   final int crossAxisCount;
   const MainCardsGrid({super.key, required this.crossAxisCount});
@@ -37,6 +39,12 @@ class MainCardsGrid extends StatelessWidget {
           iconBackgroundColor: item.backgroundColor,
           onTap: () async {
             switch (item.title) {
+              case 'Leaves':
+                context.push('/home/leaves');
+                final provider =
+                Provider.of<LeaveStatusProvider>(context, listen: false);
+                await provider.fetchLeaveStatusGroups();
+                break;
               case 'Payslips':
                 context.push('/home/payslips');
                 final provider =

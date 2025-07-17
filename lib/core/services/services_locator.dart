@@ -1,4 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_remote_data_source.dart';
+import 'package:flex_ops_hr/features/leaves/data/repository/leaves_repository_impl.dart';
+import 'package:flex_ops_hr/features/leaves/domain/repository/base_leave_repository.dart';
+import 'package:flex_ops_hr/features/leaves/domain/usecases/get_leave_status_groups_usecase.dart';
+import 'package:flex_ops_hr/features/leaves/presentation/controller/leave_status_provider.dart';
 import 'package:flex_ops_hr/features/loans/data/datasources/loan_remote_data_source.dart';
 import 'package:flex_ops_hr/features/loans/data/repositories/loan_repository_impl.dart';
 import 'package:flex_ops_hr/features/loans/domain/repositories/base_loan_repository.dart';
@@ -28,6 +33,7 @@ import 'package:flex_ops_hr/features/profile/data/repository/profile_repository_
 import 'package:flex_ops_hr/features/profile/domain/repository/base_profile_repository.dart';
 import 'package:flex_ops_hr/features/profile/domain/usecases/get_user_profile.dart';
 import 'package:flex_ops_hr/features/profile/presentation/controller/profile_provider.dart';
+
 
 final sl = GetIt.instance;
 
@@ -114,6 +120,27 @@ sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
 
 // Resignation - Provider
 sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl()));
+
+
+
+    /// Time-Off - Data Source
+    sl.registerLazySingleton<LeavesRemoteDataSource>(
+          () => LeavesRemoteDataSourceImpl(sl()),
+    );
+
+// Time-Off - Repository
+    sl.registerLazySingleton<LeavesRepository>(
+          () => LeavesRepositoryImpl(sl()),
+    );
+
+// Time-Off - Use Case
+    sl.registerLazySingleton(() => GetLeaveStatusGroupsUseCase(sl()));
+
+// Time-Off - Provider (بعد التعديل على نفس مبدأ PayslipProvider)
+    sl.registerFactory(() => LeaveStatusProvider(
+      getLeaveStatusGroupsUseCase: sl(),
+    ));
+
 
   }
 }
