@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flex_ops_hr/features/iqama/data/datasources/iqama_remote_data_source.dart';
 import 'package:flex_ops_hr/features/iqama/data/repository/iqama_repository_impl.dart';
 import 'package:flex_ops_hr/features/iqama/domain/repository/base_iqama_repository.dart';
+import 'package:flex_ops_hr/features/iqama/domain/usecases/create_iqama_renewal_usecase.dart';
 import 'package:flex_ops_hr/features/iqama/domain/usecases/get_iqama_renewal_groups_usecase.dart';
 import 'package:flex_ops_hr/features/iqama/presentation/controller/iqama_provider.dart';
 import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_remote_data_source.dart';
@@ -163,8 +164,13 @@ sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl(), 
 
     // Iqama - Use Case
     sl.registerLazySingleton(() => GetIqamaRenewalGroupsUseCase(sl()));
+    sl.registerLazySingleton(() => CreateIqamaRenewalUseCase(sl()));
+
 
     // Iqama - Provider
-    sl.registerFactory(() => IqamaProvider());
+    sl.registerFactory(() => IqamaProvider(
+      getIqamaRenewalGroupsUseCase: sl(),
+      createIqamaRenewalUseCase: sl(),
+    ));
   }
 }

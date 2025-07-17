@@ -1,5 +1,6 @@
 import 'package:flex_ops_hr/core/utils/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,7 +19,7 @@ class _IqamaRenewalsScreenState extends State<IqamaRenewalsScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      context.read<IqamaProvider>().getIqamaRenewalGroups();
+      context.read<IqamaProvider>().fetchIqamaRenewalGroups();
     });
   }
 
@@ -31,6 +32,14 @@ class _IqamaRenewalsScreenState extends State<IqamaRenewalsScreen> {
           'Iqama Renewals',
           style: theme.textTheme.titleLarge?.copyWith(fontSize: 20.sp),
         ),
+        actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            context.push('/home/iqama-renewals/createIqamaRenewal');
+          },
+        ),
+      ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.w),
@@ -41,7 +50,7 @@ class _IqamaRenewalsScreenState extends State<IqamaRenewalsScreen> {
             } else if (provider.state == AppRequesState.error) {
               return Center(
                 child: Text(
-                  provider.errorMessage,
+                  provider.errorMessage ?? 'An error occurred',
                   style: theme.textTheme.bodyMedium?.copyWith(color: Colors.red),
                 ),
               );

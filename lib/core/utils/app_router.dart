@@ -1,5 +1,6 @@
 import 'package:flex_ops_hr/features/auth_screens/presentation/screens/login_screen.dart';
 import 'package:flex_ops_hr/features/home/presentation/screens/home_screen.dart';
+import 'package:flex_ops_hr/features/iqama/presentation/screens/create_iqama_renewal_screen.dart';
 import 'package:flex_ops_hr/features/iqama/presentation/screens/iqama_renewals_screen.dart';
 import 'package:flex_ops_hr/features/loans/presentation/screens/create_loan_screen.dart';
 import 'package:flex_ops_hr/features/loans/presentation/screens/loans_screen.dart';
@@ -65,7 +66,10 @@ GoRouter appRouter(bool shouldLogin) {
           path: '/iqama-renewals',
           builder: (context, state) => const IqamaRenewalsScreen(),
         ),
-
+   GoRoute(
+          path: 'iqama-renewals/createIqamaRenewal',
+          builder: (context, state) => const CreateIqamaRenewalScreen(),
+        ),
 
         ],
       ),
