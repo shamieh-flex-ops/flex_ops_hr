@@ -1,8 +1,10 @@
 import 'package:flex_ops_hr/features/auth_screens/presentation/screens/login_screen.dart';
 import 'package:flex_ops_hr/features/home/presentation/screens/home_screen.dart';
+import 'package:flex_ops_hr/features/iqama/presentation/screens/iqama_renewals_screen.dart';
 import 'package:flex_ops_hr/features/loans/presentation/screens/create_loan_screen.dart';
 import 'package:flex_ops_hr/features/loans/presentation/screens/loans_screen.dart';
 import 'package:flex_ops_hr/features/payslips/presentation/screens/payslips_screen.dart';
+import 'package:flex_ops_hr/features/resignation/presentation/screens/create_resignation_screen.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/screens/resignation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,7 +54,19 @@ GoRouter appRouter(bool shouldLogin) {
           GoRoute(
             path: 'resignations',
             builder: (context, state) => const ResignationScreen(),
+   
           ),
+
+            GoRoute(
+          path: 'resignations/createResignations',
+          builder: (context, state) => const CreateResignationScreen(),
+        ),
+     GoRoute(
+          path: '/iqama-renewals',
+          builder: (context, state) => const IqamaRenewalsScreen(),
+        ),
+
+
         ],
       ),
       GoRoute(

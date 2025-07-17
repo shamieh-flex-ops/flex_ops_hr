@@ -42,7 +42,7 @@ class MainCardsGrid extends StatelessWidget {
               case 'Leaves':
                 context.push('/home/leaves');
                 final provider =
-                Provider.of<LeaveStatusProvider>(context, listen: false);
+                    Provider.of<LeaveStatusProvider>(context, listen: false);
                 await provider.fetchLeaveStatusGroups();
                 break;
               case 'Payslips':
@@ -52,16 +52,23 @@ class MainCardsGrid extends StatelessWidget {
                 await provider.fetchPayslips();
                 break;
               case 'Loans':
-                    context.push('/home/loans');
+                context.push('/home/loans');
                 final loanProvider =
                     Provider.of<LoanProvider>(context, listen: false);
                 await loanProvider.fetchLoanGroups();
                 break;
-                  case 'Resignations':
-      context.push('/home/resignations');
-      final provider = Provider.of<ResignationProvider>(context, listen: false);
-      await provider.fetchResignationGroups();
-      break;
+              case 'Resignations':
+                context.push('/home/resignations');
+                final provider =
+                    Provider.of<ResignationProvider>(context, listen: false);
+                await provider.fetchResignationGroups();
+                break;
+                  case 'Renew Iqama':
+                context.push('/home/iqama-renewals');
+                final provider =
+                    Provider.of<ResignationProvider>(context, listen: false);
+                await provider.fetchResignationGroups();
+                break;
               default:
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Coming Soon...")),
@@ -121,7 +128,7 @@ List<CardDataModel> _staticCardData() => [
         backgroundColor: Colors.indigo.shade100,
       ),
       CardDataModel(
-        title: 'Documents',
+        title: 'Renew Iqama',
         icon: Icons.folder,
         iconColor: Colors.green,
         backgroundColor: Colors.green.shade100,

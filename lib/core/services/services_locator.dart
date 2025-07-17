@@ -1,4 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flex_ops_hr/features/iqama/data/datasources/iqama_remote_data_source.dart';
+import 'package:flex_ops_hr/features/iqama/data/repository/iqama_repository_impl.dart';
+import 'package:flex_ops_hr/features/iqama/domain/repository/base_iqama_repository.dart';
+import 'package:flex_ops_hr/features/iqama/domain/usecases/get_iqama_renewal_groups_usecase.dart';
+import 'package:flex_ops_hr/features/iqama/presentation/controller/iqama_provider.dart';
 import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_remote_data_source.dart';
 import 'package:flex_ops_hr/features/leaves/data/repository/leaves_repository_impl.dart';
 import 'package:flex_ops_hr/features/leaves/domain/repository/base_leave_repository.dart';
@@ -19,6 +24,7 @@ import 'package:flex_ops_hr/features/profile/data/datasource/profile_remote_data
 import 'package:flex_ops_hr/features/resignation/data/datasources/resignation_remote_data_source.dart';
 import 'package:flex_ops_hr/features/resignation/data/repositories/resignation_repository_impl.dart';
 import 'package:flex_ops_hr/features/resignation/domain/repositories/base_resignation_repository.dart';
+import 'package:flex_ops_hr/features/resignation/domain/usecases/create_resignation_usecase.dart';
 import 'package:flex_ops_hr/features/resignation/domain/usecases/get_resignation_groups_usecase.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 import 'package:get_it/get_it.dart';
@@ -117,9 +123,11 @@ sl.registerLazySingleton<BaseResignationRepository>(
 
 // Resignation - Use Case
 sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
+    sl.registerLazySingleton(() => CreateResignationUseCase(sl()));
+
 
 // Resignation - Provider
-sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl()));
+sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl(), createResignationUseCase: sl()));
 
 
 
@@ -141,6 +149,22 @@ sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl()))
       getLeaveStatusGroupsUseCase: sl(),
     ));
 
+ // =================== IQAMA ===================
 
+    // Iqama - Data Source
+    sl.registerLazySingleton<IqamaRemoteDataSource>(
+      () => IqamaRemoteDataSourceImpl(dio: sl()),
+    );
+
+    // Iqama - Repository
+    sl.registerLazySingleton<BaseIqamaRepository>(
+      () => IqamaRepositoryImpl(sl()),
+    );
+
+    // Iqama - Use Case
+    sl.registerLazySingleton(() => GetIqamaRenewalGroupsUseCase(sl()));
+
+    // Iqama - Provider
+    sl.registerFactory(() => IqamaProvider());
   }
 }

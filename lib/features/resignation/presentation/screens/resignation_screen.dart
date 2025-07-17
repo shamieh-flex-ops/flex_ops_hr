@@ -4,6 +4,7 @@ import 'package:flex_ops_hr/core/utils/enums.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ResignationScreen extends StatefulWidget {
@@ -30,6 +31,17 @@ class _ResignationScreenState extends State<ResignationScreen> {
           'Resignation',
           style: TextStyle(fontSize: 20.sp),
         ),
+          actions: [
+    IconButton(
+      icon: Icon(Icons.add, size: 24.sp),
+      tooltip: 'Create Resignation',
+      onPressed: () {
+        // Navigate to Create Resignation screen
+           context.push('/home/resignations/createResignations');
+      },
+    ),
+    SizedBox(width: 8.w),
+  ],
       ),
       body: Consumer<ResignationProvider>(
         builder: (context, provider, _) {

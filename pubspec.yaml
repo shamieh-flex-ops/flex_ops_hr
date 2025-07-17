@@ -50,6 +50,8 @@ dependencies:
   go_router:
   google_maps_flutter:
   url_launcher:
+  file_picker:
+  provider:
 
 
 
