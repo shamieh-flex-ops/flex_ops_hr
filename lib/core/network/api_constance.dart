@@ -9,7 +9,11 @@ class ApiConstance {
        static const String createLoan = "${baseUrl}create-loan";
   static const String resignations = "${baseUrl}my-resignation";
   static const String createResignation = "${baseUrl}create-resignation";
-       
+         static const String getIqamaRenewals = "${baseUrl}my-renew_iqama";
+  static const String createIqamaRenewal = "${baseUrl}create-renew_iqama";
+
+         
+
 
   static const String profile = "${baseUrl}my-info";
   static const String leaveState = "${baseUrl}my-timeoff";

@@ -2,6 +2,35 @@
 
 import 'package:dio/dio.dart';
 import 'package:flex_ops_hr/features/leaves/presentation/controller/leave_request_provider.dart';
+import 'package:flex_ops_hr/features/iqama/data/datasources/iqama_remote_data_source.dart';
+import 'package:flex_ops_hr/features/iqama/data/repository/iqama_repository_impl.dart';
+import 'package:flex_ops_hr/features/iqama/domain/repository/base_iqama_repository.dart';
+import 'package:flex_ops_hr/features/iqama/domain/usecases/create_iqama_renewal_usecase.dart';
+import 'package:flex_ops_hr/features/iqama/domain/usecases/get_iqama_renewal_groups_usecase.dart';
+import 'package:flex_ops_hr/features/iqama/presentation/controller/iqama_provider.dart';
+import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_remote_data_source.dart';
+import 'package:flex_ops_hr/features/leaves/data/repository/leaves_repository_impl.dart';
+import 'package:flex_ops_hr/features/leaves/domain/repository/base_leave_repository.dart';
+import 'package:flex_ops_hr/features/leaves/domain/usecases/get_leave_status_groups_usecase.dart';
+import 'package:flex_ops_hr/features/leaves/presentation/controller/leave_status_provider.dart';
+import 'package:flex_ops_hr/features/loans/data/datasources/loan_remote_data_source.dart';
+import 'package:flex_ops_hr/features/loans/data/repositories/loan_repository_impl.dart';
+import 'package:flex_ops_hr/features/loans/domain/repositories/base_loan_repository.dart';
+import 'package:flex_ops_hr/features/loans/domain/usecases/create_loan_usecase.dart';
+import 'package:flex_ops_hr/features/loans/domain/usecases/get_loan_groups_usecase.dart';
+import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider.dart';
+import 'package:flex_ops_hr/features/payslips/data/datasources/payslip_remote_data_source.dart';
+import 'package:flex_ops_hr/features/payslips/data/repositories/payslip_repository_impl.dart';
+import 'package:flex_ops_hr/features/payslips/domain/repositories/base_payslip_repository.dart';
+import 'package:flex_ops_hr/features/payslips/domain/usecases/get_payslips_usecase.dart';
+import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
+import 'package:flex_ops_hr/features/profile/data/datasource/profile_remote_data_source.dart';
+import 'package:flex_ops_hr/features/resignation/data/datasources/resignation_remote_data_source.dart';
+import 'package:flex_ops_hr/features/resignation/data/repositories/resignation_repository_impl.dart';
+import 'package:flex_ops_hr/features/resignation/domain/repositories/base_resignation_repository.dart';
+import 'package:flex_ops_hr/features/resignation/domain/usecases/create_resignation_usecase.dart';
+import 'package:flex_ops_hr/features/resignation/domain/usecases/get_resignation_groups_usecase.dart';
+import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -122,6 +151,27 @@ class ServicesLocator {
     sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
     sl.registerFactory(
             () => ResignationProvider(getResignationGroupsUseCase: sl()));
+    // LOANS - Provider
+    sl.registerFactory(() => LoanProvider(getLoanGroupsUseCase: sl(), createLoanUseCase: sl()));
+        // =================== Resignation ===================
+
+// Resignation - Data Source
+sl.registerLazySingleton<ResignationRemoteDataSource>(
+  () => ResignationRemoteDataSourceImpl(dio: sl()),
+);
+
+// Resignation - Repository
+sl.registerLazySingleton<BaseResignationRepository>(
+  () => ResignationRepositoryImpl(sl()),
+);
+
+// Resignation - Use Case
+sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
+    sl.registerLazySingleton(() => CreateResignationUseCase(sl()));
+
+
+// Resignation - Provider
+sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl(), createResignationUseCase: sl()));
 
     // =================== LEAVES (ميزة الإجازات - دمج الطلبات والحالة) ===================
 
@@ -163,6 +213,29 @@ class ServicesLocator {
     );
     sl.registerFactory(() => LeaveStatusProvider(
       getLeaveStatusGroupsUseCase: sl(),
+    ));
+
+ // =================== IQAMA ===================
+
+    // Iqama - Data Source
+    sl.registerLazySingleton<IqamaRemoteDataSource>(
+      () => IqamaRemoteDataSourceImpl(dio: sl()),
+    );
+
+    // Iqama - Repository
+    sl.registerLazySingleton<BaseIqamaRepository>(
+      () => IqamaRepositoryImpl(sl()),
+    );
+
+    // Iqama - Use Case
+    sl.registerLazySingleton(() => GetIqamaRenewalGroupsUseCase(sl()));
+    sl.registerLazySingleton(() => CreateIqamaRenewalUseCase(sl()));
+
+
+    // Iqama - Provider
+    sl.registerFactory(() => IqamaProvider(
+      getIqamaRenewalGroupsUseCase: sl(),
+      createIqamaRenewalUseCase: sl(),
     ));
   }
 }

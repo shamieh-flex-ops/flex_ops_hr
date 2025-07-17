@@ -1,6 +1,7 @@
 // lib/main_hr/app_providers.dart
 
 import 'package:flex_ops_hr/features/leaves/presentation/controller/leave_request_provider.dart';
+import 'package:flex_ops_hr/features/iqama/presentation/controller/iqama_provider.dart';
 import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider.dart';
 import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 import 'package:flex_ops_hr/features/profile/presentation/controller/profile_provider.dart';
@@ -30,6 +31,7 @@ class AppProviders extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<ResignationProvider>()),
         ChangeNotifierProvider(create: (_) => sl<LeaveStatusProvider>()),
         ChangeNotifierProvider(create: (_) => sl<LeavesRequestProvider>())
+        ChangeNotifierProvider(create: (_) => sl<IqamaProvider>()),
 
 
 

@@ -59,7 +59,7 @@ class ResignationRemoteDataSourceImpl implements ResignationRemoteDataSource {
         },
         options: Options(headers: {'token': token}),
       );
-
+print(response.data);
       return CreateResignationResponseModel.fromJson(response.data);
     } catch (e) {
       throw _handleError(e);

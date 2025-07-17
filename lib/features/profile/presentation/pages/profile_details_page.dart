@@ -64,10 +64,10 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                                     child: SizedBox(
                                       width: 80.w,
                                       height: 80.h,
-                                      child: Image.network(
-                                      "${ApiConstance.domain}${profile.imageUrl}",
-                                        fit: BoxFit.cover,
-                                      ),
+                                      // child: Image.network(
+                                      // "${ApiConstance.domain}${profile.imageUrl}",
+                                      //   fit: BoxFit.cover,
+                                      // ),
                                     ),
                                   ),
                                 ),

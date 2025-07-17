@@ -26,7 +26,7 @@ class _PayslipsPageState extends State<PayslipsPage> {
 
   Future<void> _launchPdf(String? url) async {
     if (url == null || url.isEmpty) return;
-    final uri = Uri.parse("${ApiConstance.domain}$url");
+    final uri = Uri.parse("${ApiConstance.domain}$url.pdf");
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
