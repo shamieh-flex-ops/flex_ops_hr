@@ -32,9 +32,7 @@ import 'package:flex_ops_hr/features/resignation/domain/usecases/create_resignat
 import 'package:flex_ops_hr/features/resignation/domain/usecases/get_resignation_groups_usecase.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-// استيرادات لميزة Auth
 import 'package:flex_ops_hr/features/auth_screens/data/datasource/auth_remote_data_source.dart';
 import 'package:flex_ops_hr/features/auth_screens/data/repository/auth_repository.dart';
 import 'package:flex_ops_hr/features/auth_screens/domain/repository/base_auth_repository.dart';
@@ -43,38 +41,15 @@ import 'package:flex_ops_hr/features/auth_screens/domain/usecases/login_usecase.
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/change_password_provider.dart';
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/login_provider.dart';
 
-// استيرادات لميزة Profile
-import 'package:flex_ops_hr/features/profile/data/datasource/profile_remote_data_source.dart';
 import 'package:flex_ops_hr/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:flex_ops_hr/features/profile/domain/repository/base_profile_repository.dart';
 import 'package:flex_ops_hr/features/profile/domain/usecases/get_user_profile.dart';
 import 'package:flex_ops_hr/features/profile/presentation/controller/profile_provider.dart';
 
-// استيرادات لميزة Payslips
-import 'package:flex_ops_hr/features/payslips/data/datasources/payslip_remote_data_source.dart';
-import 'package:flex_ops_hr/features/payslips/data/repositories/payslip_repository_impl.dart';
-import 'package:flex_ops_hr/features/payslips/domain/repositories/base_payslip_repository.dart';
-import 'package:flex_ops_hr/features/payslips/domain/usecases/get_payslips_usecase.dart';
-import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 
-// استيرادات لميزة Loans
-import 'package:flex_ops_hr/features/loans/data/datasources/loan_remote_data_source.dart';
-import 'package:flex_ops_hr/features/loans/data/repositories/loan_repository_impl.dart';
-import 'package:flex_ops_hr/features/loans/domain/repositories/base_loan_repository.dart';
-import 'package:flex_ops_hr/features/loans/domain/usecases/create_loan_usecase.dart';
-import 'package:flex_ops_hr/features/loans/domain/usecases/get_loan_groups_usecase.dart';
-import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider.dart';
 
-// استيرادات لميزة Resignation
-import 'package:flex_ops_hr/features/resignation/data/datasources/resignation_remote_data_source.dart';
-import 'package:flex_ops_hr/features/resignation/data/repositories/resignation_repository_impl.dart';
-import 'package:flex_ops_hr/features/resignation/domain/repositories/base_resignation_repository.dart';
-import 'package:flex_ops_hr/features/resignation/domain/usecases/get_resignation_groups_usecase.dart';
-import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 
-// استيرادات لميزة LEAVES (دمج Leaves Request و Leaves Status تحت مظلة واحدة إذا كان الريبو نفسه)
 import 'package:flex_ops_hr/features/leaves/data/datasource/base_leaves_request_remote_data_source.dart';
-import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_remote_data_source.dart';
 import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_request_remote_data_source_impl.dart';
 import 'package:flex_ops_hr/features/leaves/data/repository/leaves_repository_impl.dart';
 import 'package:flex_ops_hr/features/leaves/domain/repository/base_leaves_request_repository.dart';
@@ -150,7 +125,7 @@ class ServicesLocator {
     );
     sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
     sl.registerFactory(
-            () => ResignationProvider(getResignationGroupsUseCase: sl()));
+            () => ResignationProvider(getResignationGroupsUseCase: sl(), createResignationUseCase: sl()));
     // LOANS - Provider
     sl.registerFactory(() => LoanProvider(getLoanGroupsUseCase: sl(), createLoanUseCase: sl()));
         // =================== Resignation ===================

@@ -30,7 +30,7 @@ class AppProviders extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<LoanProvider>()),
         ChangeNotifierProvider(create: (_) => sl<ResignationProvider>()),
         ChangeNotifierProvider(create: (_) => sl<LeaveStatusProvider>()),
-        ChangeNotifierProvider(create: (_) => sl<LeavesRequestProvider>())
+        ChangeNotifierProvider(create: (_) => sl<LeavesRequestProvider>()),
         ChangeNotifierProvider(create: (_) => sl<IqamaProvider>()),
 
 
