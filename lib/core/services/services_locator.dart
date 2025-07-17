@@ -1,10 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:flex_ops_hr/features/loans/data/datasources/loan_remote_data_source.dart';
+import 'package:flex_ops_hr/features/loans/data/repositories/loan_repository_impl.dart';
+import 'package:flex_ops_hr/features/loans/domain/repositories/base_loan_repository.dart';
+import 'package:flex_ops_hr/features/loans/domain/usecases/create_loan_usecase.dart';
+import 'package:flex_ops_hr/features/loans/domain/usecases/get_loan_groups_usecase.dart';
+import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider.dart';
 import 'package:flex_ops_hr/features/payslips/data/datasources/payslip_remote_data_source.dart';
 import 'package:flex_ops_hr/features/payslips/data/repositories/payslip_repository_impl.dart';
 import 'package:flex_ops_hr/features/payslips/domain/repositories/base_payslip_repository.dart';
 import 'package:flex_ops_hr/features/payslips/domain/usecases/get_payslips_usecase.dart';
 import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 import 'package:flex_ops_hr/features/profile/data/datasource/profile_remote_data_source.dart';
+import 'package:flex_ops_hr/features/resignation/data/datasources/resignation_remote_data_source.dart';
+import 'package:flex_ops_hr/features/resignation/data/repositories/resignation_repository_impl.dart';
+import 'package:flex_ops_hr/features/resignation/domain/repositories/base_resignation_repository.dart';
+import 'package:flex_ops_hr/features/resignation/domain/usecases/get_resignation_groups_usecase.dart';
+import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flex_ops_hr/features/auth_screens/data/datasource/auth_remote_data_source.dart';
 import 'package:flex_ops_hr/features/auth_screens/data/repository/auth_repository.dart';
@@ -24,6 +35,7 @@ class ServicesLocator {
   Future<void> init() async {
     // Dio
     sl.registerLazySingleton<Dio>(() => Dio());
+    // =================== AUTH ===================
 
     // Auth - Data Source
     sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -44,38 +56,64 @@ class ServicesLocator {
     sl.registerLazySingleton(
         () => ChangePasswordProvider(changePasswordUseCase: sl()));
 
+    // =================== PROFILE ===================
     // Profile - Data Source
     sl.registerLazySingleton<ProfileRemoteDataSource>(
       () => ProfileRemoteDataSourceImpl(sl()),
     );
-
     // Profile - Repository
     sl.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(sl()),
     );
-
     // Profile - Use Case
     sl.registerLazySingleton(() => GetUserProfile(sl()));
-
     // Profile - Provider
     sl.registerFactory(() => ProfileProvider(getUserProfileUseCase: sl()));
 
-
+    // =================== PAYSLIPS ===================
     // Payslips - Data Source
-sl.registerLazySingleton<PayslipRemoteDataSource>(
-  () => PayslipRemoteDataSourceImpl(dio: sl()),
+    sl.registerLazySingleton<PayslipRemoteDataSource>(
+      () => PayslipRemoteDataSourceImpl(dio: sl()),
+    );
+    // Payslips - Repository
+    sl.registerLazySingleton<BasePayslipRepository>(
+      () => PayslipRepositoryImpl(remoteDataSource: sl()),
+    );
+    // Payslips - Use Case
+    sl.registerLazySingleton(() => GetPayslipsUseCase(sl()));
+    // Payslips - Provider
+    sl.registerFactory(() => PayslipProvider(getPayslipsUseCase: sl()));
+
+    // =================== LOANS ===================
+    // LOANS - Data Source
+    sl.registerLazySingleton<LoanRemoteDataSource>(
+        () => LoanRemoteDataSourceImpl(sl()));
+    // LOANS - Repository
+    sl.registerLazySingleton<BaseLoanRepository>(
+        () => LoanRepositoryImpl(sl()));
+    // LOANS - Use Case
+    sl.registerLazySingleton(() => GetLoanGroupsUseCase(sl()));
+    sl.registerLazySingleton(() => CreateLoanUseCase(sl()));
+
+    // LOANS - Provider
+    sl.registerFactory(() => LoanProvider(getLoanGroupsUseCase: sl(), createLoanUseCase: sl()));
+        // =================== Resignation ===================
+
+// Resignation - Data Source
+sl.registerLazySingleton<ResignationRemoteDataSource>(
+  () => ResignationRemoteDataSourceImpl(dio: sl()),
 );
 
-// Payslips - Repository
-sl.registerLazySingleton<BasePayslipRepository>(
-  () => PayslipRepositoryImpl(remoteDataSource: sl()),
+// Resignation - Repository
+sl.registerLazySingleton<BaseResignationRepository>(
+  () => ResignationRepositoryImpl(sl()),
 );
 
-// Payslips - Use Case
-sl.registerLazySingleton(() => GetPayslipsUseCase(sl()));
+// Resignation - Use Case
+sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
 
-// Payslips - Provider
-sl.registerFactory(() => PayslipProvider(getPayslipsUseCase: sl()));
+// Resignation - Provider
+sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl()));
 
   }
 }

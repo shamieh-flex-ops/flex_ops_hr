@@ -1,7 +1,9 @@
 // lib/presentation/widgets/main_cards_grid.dart
 
 import 'package:flex_ops_hr/features/home/presentation/widgets/main_card.dart';
+import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider.dart';
 import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
+import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -36,13 +38,22 @@ class MainCardsGrid extends StatelessWidget {
           onTap: () async {
             switch (item.title) {
               case 'Payslips':
-                   context.push('/home/payslips');
+                context.push('/home/payslips');
                 final provider =
                     Provider.of<PayslipProvider>(context, listen: false);
                 await provider.fetchPayslips();
-           
                 break;
-
+              case 'Loans':
+                    context.push('/home/loans');
+                final loanProvider =
+                    Provider.of<LoanProvider>(context, listen: false);
+                await loanProvider.fetchLoanGroups();
+                break;
+                  case 'Resignations':
+      context.push('/home/resignations');
+      final provider = Provider.of<ResignationProvider>(context, listen: false);
+      await provider.fetchResignationGroups();
+      break;
               default:
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Coming Soon...")),
@@ -90,13 +101,13 @@ List<CardDataModel> _staticCardData() => [
         backgroundColor: Colors.blue.shade100,
       ),
       CardDataModel(
-        title: 'Requests',
+        title: 'Loans',
         icon: Icons.request_page,
         iconColor: Colors.purple,
         backgroundColor: Colors.purple.shade100,
       ),
       CardDataModel(
-        title: 'Overtime',
+        title: 'Resignations',
         icon: Icons.timelapse,
         iconColor: Colors.indigo,
         backgroundColor: Colors.indigo.shade100,
