@@ -16,5 +16,8 @@ class ApiConstance {
 
 
   static const String profile = "${baseUrl}my-info";
-  static const String leaveState = "${baseUrl}my-timeoff";
+  static const String timeOffState = "${baseUrl}my-timeoff";
+  static const String createTimeOff = "${baseUrl}create-timeoff";
+  static const String leavesInfo = "${baseUrl}timeoff-board";
 }
+

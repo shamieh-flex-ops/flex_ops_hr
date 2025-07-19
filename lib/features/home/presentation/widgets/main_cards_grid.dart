@@ -4,15 +4,15 @@ import 'package:flex_ops_hr/features/home/presentation/widgets/main_card.dart';
 import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider.dart';
 import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
+import 'package:flex_ops_hr/features/timeoff/presentation/controllers/time_off_status_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../leaves/presentation/controller/leave_status_provider.dart';
-
 class MainCardsGrid extends StatelessWidget {
   final int crossAxisCount;
+
   const MainCardsGrid({super.key, required this.crossAxisCount});
 
   @override
@@ -40,10 +40,10 @@ class MainCardsGrid extends StatelessWidget {
           onTap: () async {
             switch (item.title) {
               case 'Leaves':
-                context.push('/home/leaves');
+                context.push('/home/time_off');
                 final provider =
-                    Provider.of<LeaveStatusProvider>(context, listen: false);
-                await provider.fetchLeaveStatusGroups();
+                    Provider.of<TimeOffStatusProvider>(context, listen: false);
+                await provider.fetchTimeOffStatusGroupsAndTypes();
                 break;
               case 'Payslips':
                 context.push('/home/payslips');
@@ -63,7 +63,7 @@ class MainCardsGrid extends StatelessWidget {
                     Provider.of<ResignationProvider>(context, listen: false);
                 await provider.fetchResignationGroups();
                 break;
-                  case 'Renew Iqama':
+              case 'Renew Iqama':
                 context.push('/home/iqama-renewals');
                 final provider =
                     Provider.of<ResignationProvider>(context, listen: false);

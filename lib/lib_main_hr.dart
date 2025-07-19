@@ -5,13 +5,14 @@ import 'package:flex_ops_hr/features/loans/presentation/controller/loan_provider
 import 'package:flex_ops_hr/features/payslips/presentation/controller/payslip_provider.dart';
 import 'package:flex_ops_hr/features/profile/presentation/controller/profile_provider.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
+import 'package:flex_ops_hr/features/timeoff/presentation/controllers/create_time_off_request_provider.dart';
+import 'package:flex_ops_hr/features/timeoff/presentation/controllers/time_off_status_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/login_provider.dart';
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/change_password_provider.dart';
 import 'package:flex_ops_hr/core/services/services_locator.dart';
-
-import 'features/leaves/presentation/controller/leave_status_provider.dart';
 
 class AppProviders extends StatelessWidget {
   final Widget child;
@@ -28,11 +29,10 @@ class AppProviders extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<PayslipProvider>()),
         ChangeNotifierProvider(create: (_) => sl<LoanProvider>()),
         ChangeNotifierProvider(create: (_) => sl<ResignationProvider>()),
-        ChangeNotifierProvider(create: (_) => sl<LeaveStatusProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<TimeOffStatusProvider>()),
+        ChangeNotifierProvider(
+            create: (_) => sl<CreateTimeOffRequestProvider>()),
         ChangeNotifierProvider(create: (_) => sl<IqamaProvider>()),
-
-
-
       ],
       child: child,
     );

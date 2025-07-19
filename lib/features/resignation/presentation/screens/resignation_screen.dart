@@ -7,6 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+// ✅ استيراد AppColors و AppTextStyles
+import 'package:flex_ops_hr/core/utils/app_theme.dart';
+
+// ✅ استيراد RectangularCardsGrid
+import 'package:flex_ops_hr/components/rectangular_cards_grid.dart';
+
 class ResignationScreen extends StatefulWidget {
   const ResignationScreen({super.key});
 
@@ -18,89 +24,102 @@ class _ResignationScreenState extends State<ResignationScreen> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Provider.of<ResignationProvider>(context, listen: false).fetchResignationGroups();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ResignationProvider>(context, listen: false)
+          .fetchResignationGroups();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundLightBlue,
       appBar: AppBar(
         title: Text(
           'Resignation',
-          style: TextStyle(fontSize: 20.sp),
+          style: AppTextStyles.headline1.copyWith(
+              color: AppColors.white),
         ),
-          actions: [
-    IconButton(
-      icon: Icon(Icons.add, size: 24.sp),
-      tooltip: 'Create Resignation',
-      onPressed: () {
-        // Navigate to Create Resignation screen
-           context.push('/home/resignations/createResignations');
-      },
-    ),
-    SizedBox(width: 8.w),
-  ],
-      ),
-      body: Consumer<ResignationProvider>(
-        builder: (context, provider, _) {
-          switch (provider.state) {
-            case AppRequesState.loading:
-              return const Center(child: CircularProgressIndicator());
-            case AppRequesState.error:
-              return Center(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0.w),
-                  child: Text(
-                    provider.errorMessage ?? 'Something went wrong',
-                    style: TextStyle(color: Colors.red, fontSize: 16.sp),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              );
-            case AppRequesState.loaded:
-              return ListView.builder(
-  itemCount: provider.resignationGroups.length,
-  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-  itemBuilder: (context, index) {
-    final group = provider.resignationGroups[index];
-
-    return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      elevation: 2,
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-        title: Text(
-          group.description,
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
-        trailing: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade100,
-            borderRadius: BorderRadius.circular(20.r),
+        backgroundColor: AppColors.primaryBlue,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add, size: 24.sp, color: AppColors.white),
+            tooltip: 'Create Resignation',
+            onPressed: () {
+              context.push('/home/resignations/create');
+            },
           ),
-          child: Text(
-            group.resignationCount.toString(),
-            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-          ),
-        ),
-        onTap: () {
-          // يمكنك وضع التنقل هنا لاحقًا
-        },
+          SizedBox(width: 8.w),
+        ],
       ),
-    );
-  },
-)
-;
-            default:
-              return const SizedBox();
-          }
-        },
+      body: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          children: [
+            Consumer<ResignationProvider>(
+              builder: (context, provider, _) {
+                switch (provider.state) {
+                  case AppRequesState.loading:
+                    return const Expanded(
+                        child: Center(
+                            child:
+                                CircularProgressIndicator()));
+                  case AppRequesState.error:
+                    return Expanded(
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0.w),
+                          child: Text(
+                            provider.errorMessage ?? 'Something went wrong',
+                            style: AppTextStyles.bodyText1
+                                .copyWith(color: AppColors.error),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  case AppRequesState.loaded:
+                    if (provider.resignationGroups.isEmpty) {
+                      return Expanded(
+                        child: Center(
+                          child: Text(
+                            'No resignation history available.',
+                            style: AppTextStyles.bodyText1,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Expanded(
+                        child: RectangularCardsGrid(
+                          cards: provider.resignationGroups.map((group) {
+                            return RectangularCardData(
+                              title: group.description,
+                              icon: Icons.person_off,
+                              badgeCount: group.resignationCount,
+                              onTap: () {
+                                if ((group.resignationCount ?? 0) > 0) {
+                                  context.push(
+                                      '/home/resignations/resignation_details',
+                                      extra: group);
+                                }
+                              },
+                              route: '',
+                            );
+                          }).toList(),
+                          crossAxisCount: 2,
+                          childAspectRatio: 1.2,
+                          mainAxisSpacing: 12.h,
+                          crossAxisSpacing: 12.w,
+                        ),
+                      );
+                    }
+                  default:
+                    return const Expanded(child: SizedBox());
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

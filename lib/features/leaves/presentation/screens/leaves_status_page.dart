@@ -47,7 +47,7 @@ class LeavesStatusPage extends StatelessWidget {
                     icon: Icons.timer,
                     label: 'Leave',
                     color: Colors.green,
-                    onTap: () => context.push('/home/leaves/request'),
+                    onTap: () => context.push('/home/leaves/request_leave'),
                   ),
                 ),
               ],

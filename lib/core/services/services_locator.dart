@@ -1,3 +1,5 @@
+// lib/core/services/services_locator.dart
+
 import 'package:dio/dio.dart';
 import 'package:flex_ops_hr/features/iqama/data/datasources/iqama_remote_data_source.dart';
 import 'package:flex_ops_hr/features/iqama/data/repository/iqama_repository_impl.dart';
@@ -5,11 +7,7 @@ import 'package:flex_ops_hr/features/iqama/domain/repository/base_iqama_reposito
 import 'package:flex_ops_hr/features/iqama/domain/usecases/create_iqama_renewal_usecase.dart';
 import 'package:flex_ops_hr/features/iqama/domain/usecases/get_iqama_renewal_groups_usecase.dart';
 import 'package:flex_ops_hr/features/iqama/presentation/controller/iqama_provider.dart';
-import 'package:flex_ops_hr/features/leaves/data/datasource/leaves_remote_data_source.dart';
-import 'package:flex_ops_hr/features/leaves/data/repository/leaves_repository_impl.dart';
-import 'package:flex_ops_hr/features/leaves/domain/repository/base_leave_repository.dart';
-import 'package:flex_ops_hr/features/leaves/domain/usecases/get_leave_status_groups_usecase.dart';
-import 'package:flex_ops_hr/features/leaves/presentation/controller/leave_status_provider.dart';
+
 import 'package:flex_ops_hr/features/loans/data/datasources/loan_remote_data_source.dart';
 import 'package:flex_ops_hr/features/loans/data/repositories/loan_repository_impl.dart';
 import 'package:flex_ops_hr/features/loans/domain/repositories/base_loan_repository.dart';
@@ -28,7 +26,18 @@ import 'package:flex_ops_hr/features/resignation/domain/repositories/base_resign
 import 'package:flex_ops_hr/features/resignation/domain/usecases/create_resignation_usecase.dart';
 import 'package:flex_ops_hr/features/resignation/domain/usecases/get_resignation_groups_usecase.dart';
 import 'package:flex_ops_hr/features/resignation/presentation/controller/resignation_provider.dart';
+import 'package:flex_ops_hr/features/timeoff/data/datasource/base_time_off_remote_data_source.dart';
+import 'package:flex_ops_hr/features/timeoff/data/datasource/time_off_remote_data_source_impl.dart';
+import 'package:flex_ops_hr/features/timeoff/data/repositries/time_off_repository_impl.dart';
+import 'package:flex_ops_hr/features/timeoff/domain/repositries/base_time_off_repository.dart';
+import 'package:flex_ops_hr/features/timeoff/domain/usecases/create_time_off_usecase.dart';
+import 'package:flex_ops_hr/features/timeoff/domain/usecases/get_available_leave_types_usecase.dart';
+import 'package:flex_ops_hr/features/timeoff/domain/usecases/get_time_off_status_groups_usecase.dart';
+import 'package:flex_ops_hr/features/timeoff/presentation/controllers/create_time_off_request_provider.dart';
+import 'package:flex_ops_hr/features/timeoff/presentation/controllers/time_off_status_provider.dart';
+
 import 'package:get_it/get_it.dart';
+
 import 'package:flex_ops_hr/features/auth_screens/data/datasource/auth_remote_data_source.dart';
 import 'package:flex_ops_hr/features/auth_screens/data/repository/auth_repository.dart';
 import 'package:flex_ops_hr/features/auth_screens/domain/repository/base_auth_repository.dart';
@@ -36,11 +45,11 @@ import 'package:flex_ops_hr/features/auth_screens/domain/usecases/change_passwor
 import 'package:flex_ops_hr/features/auth_screens/domain/usecases/login_usecase.dart';
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/change_password_provider.dart';
 import 'package:flex_ops_hr/features/auth_screens/presentation/controller/login_provider.dart';
+
 import 'package:flex_ops_hr/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:flex_ops_hr/features/profile/domain/repository/base_profile_repository.dart';
 import 'package:flex_ops_hr/features/profile/domain/usecases/get_user_profile.dart';
 import 'package:flex_ops_hr/features/profile/presentation/controller/profile_provider.dart';
-
 
 final sl = GetIt.instance;
 
@@ -48,109 +57,90 @@ class ServicesLocator {
   Future<void> init() async {
     // Dio
     sl.registerLazySingleton<Dio>(() => Dio());
-    // =================== AUTH ===================
 
-    // Auth - Data Source
+    // =================== AUTH ===================
     sl.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(sl()),
     );
-
-    // Auth - Repository
     sl.registerLazySingleton<BaseAuthRepository>(
       () => AuthRepository(sl()),
     );
-
-    // Auth - Use Cases
     sl.registerLazySingleton(() => LoginUseCase(sl()));
     sl.registerLazySingleton(() => ChangePasswordUseCase(sl()));
-
-    // Auth - Providers
     sl.registerFactory(() => LoginProvider(loginUseCase: sl()));
     sl.registerLazySingleton(
         () => ChangePasswordProvider(changePasswordUseCase: sl()));
 
     // =================== PROFILE ===================
-    // Profile - Data Source
     sl.registerLazySingleton<ProfileRemoteDataSource>(
       () => ProfileRemoteDataSourceImpl(sl()),
     );
-    // Profile - Repository
     sl.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(sl()),
     );
-    // Profile - Use Case
     sl.registerLazySingleton(() => GetUserProfile(sl()));
-    // Profile - Provider
     sl.registerFactory(() => ProfileProvider(getUserProfileUseCase: sl()));
 
     // =================== PAYSLIPS ===================
-    // Payslips - Data Source
     sl.registerLazySingleton<PayslipRemoteDataSource>(
       () => PayslipRemoteDataSourceImpl(dio: sl()),
     );
-    // Payslips - Repository
     sl.registerLazySingleton<BasePayslipRepository>(
       () => PayslipRepositoryImpl(remoteDataSource: sl()),
     );
-    // Payslips - Use Case
     sl.registerLazySingleton(() => GetPayslipsUseCase(sl()));
-    // Payslips - Provider
     sl.registerFactory(() => PayslipProvider(getPayslipsUseCase: sl()));
 
     // =================== LOANS ===================
-    // LOANS - Data Source
     sl.registerLazySingleton<LoanRemoteDataSource>(
         () => LoanRemoteDataSourceImpl(sl()));
-    // LOANS - Repository
     sl.registerLazySingleton<BaseLoanRepository>(
         () => LoanRepositoryImpl(sl()));
-    // LOANS - Use Case
     sl.registerLazySingleton(() => GetLoanGroupsUseCase(sl()));
     sl.registerLazySingleton(() => CreateLoanUseCase(sl()));
+    sl.registerFactory(() =>
+        LoanProvider(getLoanGroupsUseCase: sl(), createLoanUseCase: sl()));
 
-    // LOANS - Provider
-    sl.registerFactory(() => LoanProvider(getLoanGroupsUseCase: sl(), createLoanUseCase: sl()));
-        // =================== Resignation ===================
-
-// Resignation - Data Source
-sl.registerLazySingleton<ResignationRemoteDataSource>(
-  () => ResignationRemoteDataSourceImpl(dio: sl()),
-);
-
-// Resignation - Repository
-sl.registerLazySingleton<BaseResignationRepository>(
-  () => ResignationRepositoryImpl(sl()),
-);
-
-// Resignation - Use Case
-sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
+    // =================== RESIGNATION ===================
+    sl.registerLazySingleton<ResignationRemoteDataSource>(
+      () => ResignationRemoteDataSourceImpl(dio: sl()),
+    );
+    sl.registerLazySingleton<BaseResignationRepository>(
+      () => ResignationRepositoryImpl(sl()),
+    );
+    sl.registerLazySingleton(() => GetResignationGroupsUseCase(sl()));
     sl.registerLazySingleton(() => CreateResignationUseCase(sl()));
+    sl.registerFactory(() => ResignationProvider(
+        getResignationGroupsUseCase: sl(), createResignationUseCase: sl()));
 
-
-// Resignation - Provider
-sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl(), createResignationUseCase: sl()));
-
-
-
-    /// Time-Off - Data Source
-    sl.registerLazySingleton<LeavesRemoteDataSource>(
-          () => LeavesRemoteDataSourceImpl(sl()),
+    // =================== TIME_OFF ===================
+    // Data Sources
+    sl.registerLazySingleton<BaseTimeOffRemoteDataSource>(
+      () => TimeOffRemoteDataSourceImpl(sl()),
     );
 
-// Time-Off - Repository
-    sl.registerLazySingleton<LeavesRepository>(
-          () => LeavesRepositoryImpl(sl()),
+    // Repository
+    sl.registerLazySingleton<BaseTimeOffRepository>(
+      () => TimeOffRepositoryImpl(sl()),
     );
 
-// Time-Off - Use Case
-    sl.registerLazySingleton(() => GetLeaveStatusGroupsUseCase(sl()));
+    // Use Cases for Time Off Request & Status
+    sl.registerLazySingleton(() => GetTimeOffStatusGroupsUseCase(sl()));
+    sl.registerLazySingleton(() => CreateTimeOffUseCase(sl()));
+    sl.registerLazySingleton(() => GetAvailableLeaveTypesUseCase(sl()));
 
-// Time-Off - Provider (بعد التعديل على نفس مبدأ PayslipProvider)
-    sl.registerFactory(() => LeaveStatusProvider(
-      getLeaveStatusGroupsUseCase: sl(),
-    ));
+    // Providers
+    sl.registerFactory(
+      () => CreateTimeOffRequestProvider(
+        createTimeOffUseCase: sl(),
+      ),
+    );
 
- // =================== IQAMA ===================
+    sl.registerFactory(() => TimeOffStatusProvider(
+          getTimeOffStatusGroupsUseCase: sl(),
+          getAvailableLeaveTypesUseCase: sl(),
+        ));
+    // =================== IQAMA ===================
 
     // Iqama - Data Source
     sl.registerLazySingleton<IqamaRemoteDataSource>(
@@ -166,11 +156,10 @@ sl.registerFactory(() => ResignationProvider(getResignationGroupsUseCase: sl(), 
     sl.registerLazySingleton(() => GetIqamaRenewalGroupsUseCase(sl()));
     sl.registerLazySingleton(() => CreateIqamaRenewalUseCase(sl()));
 
-
     // Iqama - Provider
     sl.registerFactory(() => IqamaProvider(
-      getIqamaRenewalGroupsUseCase: sl(),
-      createIqamaRenewalUseCase: sl(),
-    ));
+          getIqamaRenewalGroupsUseCase: sl(),
+          createIqamaRenewalUseCase: sl(),
+        ));
   }
 }
