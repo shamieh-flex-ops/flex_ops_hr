@@ -5,3 +5,5 @@ enum RequestState {
 }
 
 enum AppRequesState { initial, loading, loaded, error }
+
+enum TimeOffFormType { timeOff, specificLeaves }

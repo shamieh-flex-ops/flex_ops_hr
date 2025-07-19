@@ -69,7 +69,7 @@ class LeaveOptionsBottomSheet extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.pop(context);
-                  context.push('/home/leaves/request_leave');
+                  context.push('/home/time_off/request_leave');
                 },
                 borderRadius: BorderRadius.circular(40.r),
                 child: Padding(
@@ -107,7 +107,7 @@ class LeaveOptionsBottomSheet extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.pop(context);
-                  context.push('/home/leaves/request_new');
+                  context.push('/home/time_off/request_time_off');
                 },
                 borderRadius: BorderRadius.circular(15.r),
                 child: Padding(
